@@ -1,13 +1,13 @@
 package hexlet.code.schemas;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema {
 
-    private boolean isRequired;
     private Integer minLength;
     private String contains;
 
-    public boolean isValid(String string) {
-        if (isRequired && (string == null || string.isEmpty())) {
+    public boolean isValid(Object o) {
+        String string = (String)o;
+        if (isRequired && (!(o instanceof String) || string.isEmpty())) {
             return false;
         }
         if (minLength != null && string.length() < minLength) {
@@ -17,10 +17,6 @@ public class StringSchema {
             return false;
         }
         return true;
-    }
-
-    public void required() {
-        isRequired = !isRequired;
     }
 
     public StringSchema contains(String subString) {
