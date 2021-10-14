@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SchemasTest {
+public class ValidatorTest {
     @Test
-    void stringSchemaTest() {
+    void stringValidatorTest() {
         StringSchema schema = new Validator().string();
 
         Assertions.assertTrue(schema.isValid(""));
@@ -35,7 +35,7 @@ public class SchemasTest {
     }
 
     @Test
-    void numberSchemaTest() {
+    void numberValidatorTest() {
         NumberSchema schema = new Validator().number();
 
         Assertions.assertTrue(schema.isValid(null));
@@ -52,6 +52,7 @@ public class SchemasTest {
 
         Assertions.assertTrue(schema.positive().isValid(ten));
         Assertions.assertFalse(schema.isValid(-six));
+        Assertions.assertFalse(schema.isValid(0));
 
         schema.range(five, ten);
 
@@ -59,10 +60,11 @@ public class SchemasTest {
         Assertions.assertTrue(schema.isValid(five));
         Assertions.assertFalse(schema.isValid(ten + 1));
         Assertions.assertFalse(schema.isValid(five - 1));
+        Assertions.assertFalse(schema.isValid(-five));
     }
 
     @Test
-    void mapSchemaTest() {
+    void mapValidatorTest() {
         Validator v = new Validator();
         MapSchema schema = v.map();
 
