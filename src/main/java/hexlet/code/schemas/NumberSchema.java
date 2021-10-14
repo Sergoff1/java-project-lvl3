@@ -5,22 +5,20 @@ public final class NumberSchema extends BaseSchema {
     private boolean isPositive;
     private Integer startRange;
     private Integer endRange;
+    private boolean isRequired;
 
     @Override
     public boolean isValid(Object o) {
-        if (isRequired() && !(o instanceof Integer)) {
+        if (!checkRequired(o)) {
             return false;
         }
-
         Integer num = (Integer) o;
-        if (isPositive && num != null && num <= 0) {
-            return false;
-        }
-        if (startRange != null && num != null && !(startRange <= num && endRange >= num)) {
-            return false;
-        }
+        return checkIsPositive(num) && checkRange(num);
+    }
 
-        return true;
+    public NumberSchema required() {
+        isRequired = !isRequired;
+        return this;
     }
 
     public NumberSchema positive() {
@@ -32,5 +30,23 @@ public final class NumberSchema extends BaseSchema {
         startRange = start;
         endRange = end;
         return this;
+    }
+
+    private boolean checkRequired(Object o) {
+        return !isRequired || o instanceof Integer;
+    }
+
+    private boolean checkIsPositive(Integer num) {
+        if (isPositive && num == null) {
+            return true;
+        }
+        return !isPositive || num >= 0;
+    }
+
+    private boolean checkRange(Integer num) {
+        if (startRange == null) {
+            return true;
+        }
+        return num != null && (startRange <= num && endRange >= num);
     }
 }
