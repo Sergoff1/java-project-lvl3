@@ -40,7 +40,7 @@ public final class NumberSchema extends BaseSchema {
         if (isPositive && num == null) {
             return true;
         }
-        return !isPositive || num >= 0;
+        return !isPositive || num > 0;
     }
 
     private boolean checkRange(Integer num) {
