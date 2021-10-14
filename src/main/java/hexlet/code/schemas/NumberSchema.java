@@ -8,15 +8,15 @@ public final class NumberSchema extends BaseSchema {
 
     @Override
     public boolean isValid(Object o) {
-        if (isRequired && !(o instanceof Integer)) {
+        if (isRequired() && !(o instanceof Integer)) {
             return false;
         }
 
         Integer num = (Integer) o;
-        if (isPositive && num <= 0) {
+        if (isPositive && num != null && num <= 0) {
             return false;
         }
-        if (startRange != null && !(startRange <= num && endRange >= num)) {
+        if (startRange != null && num != null && !(startRange <= num && endRange >= num)) {
             return false;
         }
 
@@ -28,8 +28,9 @@ public final class NumberSchema extends BaseSchema {
         return this;
     }
 
-    public void range(int start, int end) {
+    public NumberSchema range(int start, int end) {
         startRange = start;
         endRange = end;
+        return this;
     }
 }

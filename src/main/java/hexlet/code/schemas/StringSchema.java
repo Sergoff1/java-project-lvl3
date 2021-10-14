@@ -7,7 +7,7 @@ public final class StringSchema extends BaseSchema {
 
     public boolean isValid(Object o) {
         String string = (String) o;
-        if (isRequired && (o == null || string.isEmpty())) {
+        if (isRequired() && (o == null || string.isEmpty())) {
             return false;
         }
         if (minLength != null && string.length() < minLength) {
