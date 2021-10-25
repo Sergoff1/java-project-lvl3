@@ -13,7 +13,9 @@ public final class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema range(int start, int end) {
-        addRequirement(num -> num instanceof Integer && (Integer) num >= start && (Integer) num <= end);
+        addRequirement(num -> num == null
+                || num instanceof Integer
+                && (Integer) num >= start && (Integer) num <= end);
         return this;
     }
 }

@@ -10,7 +10,7 @@ public final class MapSchema extends BaseSchema {
     }
 
     public MapSchema sizeof(int size) {
-        addRequirement(map -> map instanceof Map && ((Map<?, ?>) map).size() == size);
+        addRequirement(map -> map == null || map instanceof Map && ((Map<?, ?>) map).size() == size);
         return this;
     }
 
